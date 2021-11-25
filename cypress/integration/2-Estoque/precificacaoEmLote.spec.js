@@ -1,6 +1,7 @@
-/// <reference types="Cypress" />
-//const faker = require('faker')
+<reference types="Cypress" />
 
+var faker = require('faker-br');
+let meuCpf = faker.br.cnpj();
 import loc from '../../support/locators'
 
 context('ESTOQUE - Precificação de produtos em lote | Possibilidade de alterar em tela "preço de custo"' , () => {

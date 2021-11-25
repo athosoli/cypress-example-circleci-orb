@@ -1,8 +1,7 @@
-/// <reference types="Cypress" />
+<reference types="Cypress" />
 
 var faker = require('faker-br');
-let meuCpf = faker.br.cpf();
-
+let meuCpf = faker.br.cnpj();
 import loc from '../../support/locators'
 
 context('GRUD - Clientes', () => {

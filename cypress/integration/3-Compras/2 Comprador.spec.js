@@ -1,7 +1,8 @@
-/// <reference types="Cypress" />
-//const faker = require('faker')
+<reference types="Cypress" />
 
-import loc from "../../support/locators";
+var faker = require('faker-br');
+let meuCpf = faker.br.cnpj();
+import loc from '../../support/locators'
 
 context("GRUD -  comprador", () => {
   beforeEach(() => {

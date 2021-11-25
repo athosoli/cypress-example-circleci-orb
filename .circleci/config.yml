@@ -25,7 +25,6 @@ workflows:
           requires:
             - cypress/install
           executor: cypress/browsers-chrome69
-        
           group: all tests
           browser: chrome
           spec: cypress/integration/*            

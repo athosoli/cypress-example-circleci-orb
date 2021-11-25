@@ -21,11 +21,15 @@ context('Testar o Login', () => {
  
   it('Cadastro de Titulo', () => {
     //seleciona cliente no menu
-    cy.get(loc.financeiro.icone).click()
-    cy.get(loc.financeiro.contasreceber).click()
-    //Fechar navigator bar
-    cy.get(loc.menu.fixar).click({timeout: 10000})
-    cy.get(loc.menu.caminho).should('contain', 'Contas a receber')
+    cy.get(loc.menu.navigator).click({ force: true }); //locators
+    cy.wait(500);
+    cy.get(loc.menu.fixar).click({ force: true }); //locators
+    //seleciona cliente no menu
+    cy.get(loc.financeiro.icone).click({ force: true });
+    cy.get(loc.financeiro.contasReceber).click({ force: true });
+    //Fechar navigator bar  { force: true }
+    cy.get(loc.menu.fixar).click({ force: true });
+    cy.get(loc.menu.caminho).should("contain", "Contas a receber");
     //verifica acentuação 
     cy.get('.panel').should('contain', 'Descrição').and('contain', 'Últ. Atualização')
     //adicionar titulo

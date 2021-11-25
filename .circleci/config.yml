@@ -26,11 +26,72 @@ workflows:
             - cypress/install
           executor: cypress/browsers-chrome69
           group: 'all tests'
-         
           browser: chrome
           spec: cypress/integration/*            
+
       - cypress/run:
           name: ConsoleGitBash
           requires:
             - cypress/install
-          spec: "cypress/integration/*.js"      
+          spec: "cypress/integration/*.js"     
+
+      - cypress/run:
+          name: 1-Integracao
+          requires:
+            - cypress/install
+          executor: cypress/browsers-chrome69
+          group: 'all tests'
+          browser: chrome
+          spec: cypress/integration/1-Integracao/*
+
+      - cypress/run:
+          name: 2-Estoque
+          requires:
+            - cypress/install
+          executor: cypress/browsers-chrome69
+          group: 'all tests'
+          browser: chrome
+          spec: cypress/integration/2-Estoque/*
+
+      - cypress/run:
+          name: 3-Compras
+          requires:
+            - cypress/install
+          executor: cypress/browsers-chrome69
+          group: 'all tests'
+          browser: chrome
+          spec: cypress/integration/3-Compras/* 
+
+      - cypress/run:
+          name: 5-Faturamento
+          requires:
+            - cypress/install
+          executor: cypress/browsers-chrome69
+          group: 'all tests'
+          browser: chrome
+          spec: cypress/integration/5-Faturamento/*
+
+      - cypress/run:
+          name: 6-Financeiro
+          requires:
+            - cypress/install
+          executor: cypress/browsers-chrome69
+          group: 'all tests'
+          browser: chrome
+          spec: cypress/integration/6-Financeiro/* 
+
+      - cypress/run:
+          name: 7-Serviço
+          requires:
+            - cypress/install
+          executor: cypress/browsers-chrome69
+          group: 'all tests'
+          browser: chrome
+          spec: cypress/integration/7-Serviço/* 
+
+
+
+
+
+
+

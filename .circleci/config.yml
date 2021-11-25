@@ -12,4 +12,4 @@ workflows:
       - cypress/install:
            build: "npm run build"
       - cypress/run:
-           record: true
+           spec: "cypress/integration/*-b.js"

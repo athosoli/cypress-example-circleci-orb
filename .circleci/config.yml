@@ -18,8 +18,10 @@ executors:
 workflows:
   build:
     jobs:
+
       - cypress/install
-    
+          
+
       - cypress/run:
           name: Chrome
           requires:

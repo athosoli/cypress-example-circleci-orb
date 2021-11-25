@@ -9,11 +9,7 @@ executors:
 workflows:
   build:
     jobs:
-      - cypress/install
-      
-
-  - cypress/run:
-      requires:
-        - cypress/install
-      start: 'lerna run start --parallel'
-      install-command: 'npm install --no-optional --unsafe-perm'
+      - cypress/install:
+           build: "npm run build"
+      - cypress/run:
+           record: true

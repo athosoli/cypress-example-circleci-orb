@@ -9,7 +9,7 @@ executors:
 workflows:
   build:
     jobs:
-      - cypress/install:
-           build: "npm run build"
+      # - cypress/install:
+      #      build: "npm run build"
       - cypress/run:
-           spec: "cypress/integration/*-b.js"
+           spec: "cypress/integration/*.js"

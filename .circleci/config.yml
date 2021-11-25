@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@1.29.0
 executors:
   with-chrome:
     resource_class: small
@@ -10,14 +10,10 @@ workflows:
   build:
     jobs:
       - cypress/install
-      - cypress/run:
-          requires:
-            - cypress/install
-          executor: with-chrome
-          browser: chrome
-          post-steps:
-            - run: ls
-            - store_test_results:
-                path: cypress/results
-            - store_artifacts:
-                path: cypress/screenshots
+      
+
+  - cypress/run:
+      requires:
+        - cypress/install
+      start: 'lerna run start --parallel'
+      install-command: 'npm install --no-optional --unsafe-perm'

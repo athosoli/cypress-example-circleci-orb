@@ -27,9 +27,19 @@ workflows:
           executor: cypress/browsers-chrome69
           group: all tests
           browser: chrome
-          spec: cypress/integration/*            
+          spec: cypress/integration/*     
+
       - cypress/run:  
           name: ConsoleGitBash
           requires:
             - cypress/install
-          spec: "cypress/integration/*.js"      
+          spec: "cypress/integration/*.js"   
+
+      - cypress/run:
+          name: Browser-Chrome
+          requires:
+            - cypress/install
+          executor: cypress/browsers-chrome73-ff68
+          group: all tests
+          browser: chrome
+          spec: cypress/integration/*   

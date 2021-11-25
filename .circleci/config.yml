@@ -26,7 +26,7 @@ workflows:
             - cypress/install
           executor: cypress/browsers-chrome69
           group: all tests
-          executor: with-chrome
+         
           browser: chrome
           spec: cypress/integration/*            
       - cypress/run:

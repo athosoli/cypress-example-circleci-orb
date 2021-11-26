@@ -64,7 +64,6 @@
     "faker": "5.5.3",
     "faker-br": "0.4.1",
     "html-webpack-plugin": "5.5.0",
-    "node-sass": "6.0.1",
     "sass": "1.43.5",
     "webpack": "5.64.4",
     "webpack-dev-server": "4.6.0"

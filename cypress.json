@@ -8,10 +8,10 @@
     "viewportWidth": 1366,
     "viewportHeight": 768,
   
-        "baseUrl": "https://erp.com.br/",
+        "baseUrl": "https://erp-test.golerp.com.br/#!/login/",
         "env":{
-          "usuario": "cypress@teste.com",
-          "senha":"1"
+          "usuario": "firefox@teste.com",
+          "senha":"4071"
         }
     }
 

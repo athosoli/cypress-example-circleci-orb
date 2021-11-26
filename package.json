@@ -39,7 +39,7 @@
     "@types/temp-write": "3.3.0",
     "ava": "3.3.0",
     "ava-ts": "0.25.2",
-    "cypress": "4.0.2",
+    "cypress": "9.1.0",
     "execa": "2.1.0",
     "husky": "4.3.7",
     "js-yaml": "3.13.1",
@@ -56,8 +56,17 @@
     }
   },
   "dependencies": {
+    "@cypress/react": "5.10.3",
+    "@cypress/webpack-dev-server": "1.7.0",
     "circleci-yarn-upgrade-pr": "1.0.6",
+    "cypress-react-selector": "2.3.13",
+    "cypress-xpath": "1.6.2",
     "faker": "5.5.3",
-    "faker-br": "0.4.1"
+    "faker-br": "0.4.1",
+    "html-webpack-plugin": "5.5.0",
+    "node-sass": "6.0.1",
+    "sass": "1.43.5",
+    "webpack": "5.64.4",
+    "webpack-dev-server": "4.6.0"
   }
 }

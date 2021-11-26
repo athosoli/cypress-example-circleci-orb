@@ -1,11 +1,11 @@
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1.29.0
+  cypress: cypress-io/cypress@1.29.0 #versao
 executors:
   with-chrome:
-    resource_class: small
+    resource_class: xlarge
     docker:
-      - image: "cypress/browsers:node14.16.0-chrome90-ff88" #img
+      - image: "cypress/browsers:node14.16.0-chrome90-ff88" 
 # workflows:
 #   build:
 #     jobs:
@@ -21,31 +21,31 @@ workflows:
       - cypress/install
     
       - cypress/run:
-          name: Chrome
+          name: Chrome - teste
           requires:
             - cypress/install
-          executor: cypress/browsers-chrome69
+          executor: cypress/browsers-chrome73
           group: 'all tests'
           browser: chrome
-          spec: cypress/integration/*            
+          spec: "cypress/integration/*.js"            
 
       - cypress/run:
-          name: ConsoleGitBash
+          name: Electron - teste
           requires:
             - cypress/install
           spec: "cypress/integration/*.js"     
 
       - cypress/run:
-          name: 1-Integracao
+          name: 1-Integracao - Chome
           requires:
             - cypress/install
           executor: cypress/browsers-chrome69
           group: 'all tests'
           browser: chrome
-          spec: cypress/integration/1-Integracao/*
+          spec: "cypress/integration/1-Integracao/*"
 
       - cypress/run:
-          name: 2-Estoque
+          name: 2-Estoque - Chome
           requires:
             - cypress/install
           executor: cypress/browsers-chrome69
@@ -54,7 +54,7 @@ workflows:
           spec: cypress/integration/2-Estoque/*
 
       - cypress/run:
-          name: 3-Compras
+          name: 3-Compras - Chome
           requires:
             - cypress/install
           executor: cypress/browsers-chrome69
@@ -63,7 +63,7 @@ workflows:
           spec: cypress/integration/3-Compras/* 
 
       - cypress/run:
-          name: 5-Faturamento
+          name: 5-Faturamento - Chome
           requires:
             - cypress/install
           executor: cypress/browsers-chrome69
@@ -72,7 +72,7 @@ workflows:
           spec: cypress/integration/5-Faturamento/*
 
       - cypress/run:
-          name: 6-Financeiro
+          name: 6-Financeiro - Chome
           requires:
             - cypress/install
           executor: cypress/browsers-chrome69
@@ -81,17 +81,10 @@ workflows:
           spec: cypress/integration/6-Financeiro/* 
 
       - cypress/run:
-          name: 7-Serviço
+          name: 7-Serviço - Chome
           requires:
             - cypress/install
           executor: cypress/browsers-chrome69
           group: 'all tests'
           browser: chrome
           spec: cypress/integration/7-Serviço/* 
-
-
-
-
-
-
-

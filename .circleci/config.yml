@@ -1,94 +1,125 @@
 version: 2.1
 orbs:
-  cypress: cypress-io/cypress@1.29.0 #versao
+  # use latest 1.x.y version of the orb
+  # best practice is to use an exact version
+  cypress: cypress-io/cypress@1.16.1
+  node: circleci/node@1.1
+
 executors:
-  with-chrome:
-    resource_class: xlarge
+  chrome80-ff72:
     docker:
-      - image:   "cypress/base:12" #"cypress/browsers:node16.5.0-chrome94-ff93"  #"cypress/browsers:node14.16.0-chrome90-ff88" 
+      - image: 'cypress/browsers:node13.6.0-chrome80-ff72'
+
+# simplest use case - do everything in a single job
 # workflows:
 #   build:
 #     jobs:
-      # - cypress/install:
-      #      build: "npm run build"
-            # - cypress/run:
-      #       spec: "cypress/integration/*.js"
-            # group: 'all tests' # name this group "all tests" on the dashboard
-            # start: 'npm start' # start server before running tests
+#       - cypress/run
+
+# run tests using Chrome browser
+# (requires custom executor with Cypress docker image that has Chrome installed)
+# workflows:
+#   build:
+#     jobs:
+#       - cypress/run:
+#           executor: cypress/browsers-chrome69
+#           browser: chrome
+
+# single job, but build the app and start server
+# workflows:
+#   build:
+#     jobs:
+#       - cypress/run:
+#           build: "npm run build"
+#           start: "npm run server"
+
+# run only specific spec file
+# workflows:
+#   build:
+#     jobs:
+#       - cypress/run:
+#           record: false
+#           spec: "cypress/integration/*-b.js"
+jobs:
+  unit:
+    executor:
+      name: node/default
+      tag: '12'
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm ci
+      - run: npm test
+
+# custom cypress run command
 workflows:
-  build:
-    
+  # a workflow to run on dependency updates with Renovate
+  dependencies:
     jobs:
-      
-      - cypress/install:
-          build: 'npm run build' # run a custom app build step
- 
-         
       - cypress/run:
-          name: Chrome - teste
-          requires:
-            - cypress/install
-          executor: cypress/browsers-chrome73
-          group: 'all tests'
-          browser: chrome
-          spec: "cypress/integration/*.js"            
+          name: test dependencies
+          filters:
+            branches:
+              only: /renovate.*/
+          no-workspace: true
+          record: true
+          tags: dependencies,renovate
 
-      - cypress/run:
-          name: Electron - teste
-          requires:
-            - cypress/install
-          spec: "cypress/integration/*.js"     
+  build:
+    jobs:
+      # could not run unit tests on Circle, validating config files
+      # always caused an error:
+      # Error: Configuration version 2.1 requires the "Enable Pipelines" project setting.
+      # Enable pipelines under Project Settings -> Advanced Settings.
+      # In order to retrigger pipelines, you must push a new commit.
+      #
+      # - unit
 
+      # checks out code and installs dependencies once
       - cypress/run:
-          name: 1-Integracao - Chome
-          requires:
-            - cypress/install
-          executor: cypress/browsers-chrome69
-          group: 'all tests'
-          browser: chrome
-          spec: "cypress/integration/1-Integracao/*"
+          filters:
+            branches:
+              ignore: /^renovate/
+          name: Mochawesome report
+          # it is a single job, so no need to
+          # cache workspace (faster!)
+          no-workspace: true
+          command: 'npm run report'
+          post-steps:
+            - store_test_results:
+                path: cypress/results
 
+      # run tests inside Docker image with Chrome pre-installed
       - cypress/run:
-          name: 2-Estoque - Chome
-          requires:
-            - cypress/install
-          executor: cypress/browsers-chrome69
-          group: 'all tests'
+          filters:
+            branches:
+              ignore: /^renovate/
+          name: Chrome 80
+          executor: chrome80-ff72
+          no-workspace: true
+          record: true
           browser: chrome
-          spec: cypress/integration/2-Estoque/*
+          # before running tests, show if any environment variables
+          # starting with CYPRESS are set
+          # using https://github.com/bahmutov/print-env
+          build: npx has-env CYPRESS
 
-      - cypress/run:
-          name: 3-Compras - Chome
-          requires:
-            - cypress/install
-          executor: cypress/browsers-chrome69
-          group: 'all tests'
-          browser: chrome
-          spec: cypress/integration/3-Compras/* 
-
-      - cypress/run:
-          name: 5-Faturamento - Chome
-          requires:
-            - cypress/install
-          executor: cypress/browsers-chrome69
-          group: 'all tests'
-          browser: chrome
-          spec: cypress/integration/5-Faturamento/*
-
-      - cypress/run:
-          name: 6-Financeiro - Chome
-          requires:
-            - cypress/install
-          executor: cypress/browsers-chrome69
-          group: 'all tests'
-          browser: chrome
-          spec: cypress/integration/6-Financeiro/* 
-
-      - cypress/run:
-          name: 7-Serviço - Chome
-          requires:
-            - cypress/install
-          executor: cypress/browsers-chrome69
-          group: 'all tests'
-          browser: chrome
-          spec: cypress/integration/7-Serviço/* 
+# realistic case: install in 1 job,
+# run tests in parallel on several machines after that
+# workflows:
+#   build:
+#     jobs:
+#       # checks out code and installs dependencies once
+#       - cypress/install:
+#           build: 'npm run build'
+#       # runs on 3 machines, load balances tests
+#       # and records on Cypress Dashboard
+#       - cypress/run:
+#           requires:
+#             - cypress/install
+#           record: true
+#           parallel: true
+#           parallelism: 3
+#           group: '3x'
+#           start: 'npm run server'

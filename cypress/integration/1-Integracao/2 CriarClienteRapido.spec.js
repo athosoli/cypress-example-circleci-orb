@@ -12,6 +12,7 @@ context('GRUD - Clientes', () => {
   })
   
   it('Login', () =>{
+	   cy.wait(5000)
     cy.get(loc.login.user).type(`${Cypress.env('usuario')}`)//variavel e locators
     cy.get(loc.login.password).clear().type(`${Cypress.env('senha')}`)//variavel e locators  
     cy.get("[class=ng-scope]").should("contain", "ACESSAR")
@@ -20,13 +21,13 @@ context('GRUD - Clientes', () => {
     
     cy.wait(2000)
    //ESSA PARTE UTILIZA COM MULTI AMBIENTES DEMOSTRAÇÃO
-   cy.contains('Selecionar...').click({timeout: 10000})
-    cy.contains('CONTROLE DE QUALIDADE AUTOMAÇÃO').click({timeout: 10000})
-    cy.contains('SELECIONAR FILIAL').click({timeout: 10000})
+   cy.contains('Selecionar...').click({timeout: 50000})
+    cy.contains('CONTROLE DE QUALIDADE AUTOMAÇÃO').click({timeout: 50000})
+    cy.contains('SELECIONAR FILIAL').click({timeout: 50000})
     cy.get("[class=ng-binding]").should("contain", "Inicio");
     //abrir a navigator bar
     // cy.get(loc.menu.navigator).click()//locators 
-    // cy.wait(500)
+     cy.wait(5000)
     // cy.get(loc.menu.fixar).click()//locators
   
   })
@@ -35,6 +36,7 @@ context('GRUD - Clientes', () => {
 
   
 it('listagem - Criar, e Excluir - Cliente', () => {
+	 cy.wait(5000)
   if (cy.get('#navigation-menu').should("be.visible")) {
     cy.get('#main').click(300, 30)
     cy.get(loc.menu.navigator).click({ force: true }); //locators

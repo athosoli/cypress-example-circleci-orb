@@ -10,8 +10,8 @@
   
         "baseUrl": "https://erp-test.golerp.com.br/#!/login/",
         "env":{
-          "usuario": "cypress@teste.com",
-          "senha":"4071"
+          "usuario": "@teste.com",
+          "senha":"4"
         }
     }
 

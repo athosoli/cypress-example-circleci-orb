@@ -1,0 +1,20 @@
+   cy.get('#navigation-menu').dblclick(30, 70) // integração
+   cy.get('#navigation-menu').dblclick(30, 130) // fiscal
+   cy.get('#navigation-menu').dblclick(30, 160) // estoque
+   cy.get('#navigation-menu').dblclick(30, 200) // compras
+   cy.get('#navigation-menu').dblclick(30, 250) // faturamento
+   cy.get('#navigation-menu').dblclick(30, 300) // financeiro
+   cy.get('#navigation-menu').dblclick(30, 340) // serviço
+   cy.get('#navigation-menu').dblclick(30, 400) // oms
+   cy.get('#navigation-menu').dblclick(30, 460) // industria
+
+      cy.get('#navigation-menu').dblclick(300, 30) // esconde a barra
+
+
+       cy.get("[class=ng-binding]").should("contain", "Inicio", {timeout: 10000});
+      
+
+   cy.get('#navigation-menu').dblclick(30, 70) // integração
+   cy.contains('Grupo cliente').click()
+   cy.get('#navigation-menu').dblclick(300, 30) // esconde a barra
+   cy.contains('Adicionar').click()
